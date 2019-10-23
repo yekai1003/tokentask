@@ -56,7 +56,6 @@ func main() {
 	r.StaticFile("/", "static/index.html")
 	r.StaticFile("/tasklist.html", "static/tasklist.html")
 	r.Static("js", "static/js")
-	//r.Static("/", "static")
 	r.Static("css", "static/css")
 	r.Static("bootstrap", "static/bootstrap")
 
