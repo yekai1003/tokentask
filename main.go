@@ -6,7 +6,7 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,24 +26,43 @@ func login(c *gin.Context) {
 	defer c.JSON(200, resp)
 	userinfo := make(map[string]string)
 	c.Bind(&userinfo)
-	fmt.Println(userinfo)
-	if userinfo["user"] == "yekai" && userinfo["pass"] == "admin1" {
+	//fmt.Println(userinfo)
+
+	if userlogin(userinfo["user"], userinfo["pass"]) {
 		return
-	} else {
-		resp.Code = "1"
-		resp.Msg = "user or password err"
 	}
 
+	resp.Code = "1"
+	resp.Msg = "user or password err"
+	return
 }
+
+func tasklist(c *gin.Context) {
+
+	tasks := task_query()
+
+	resp := &RespMsg{
+		"0",
+		"OK",
+		tasks,
+	}
+	c.JSON(http.StatusOK, resp)
+	return
+}
+
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.StaticFile("/", "static/index.html")
+	r.StaticFile("/tasklist.html", "static/tasklist.html")
 	r.Static("js", "static/js")
+	//r.Static("/", "static")
 	r.Static("css", "static/css")
+	r.Static("bootstrap", "static/bootstrap")
 
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	r.POST("login", login)
+	r.GET("tasklist", tasklist)
 	r.Run(":8080")
 }
