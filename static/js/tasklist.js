@@ -1,10 +1,9 @@
 $(function() {
-	console.log("haha");
-    getTaskList();
+	  getTaskList();
   
     //任务列表
     function getTaskList(){
-        axios.get('http://localhost:8080/tasklist').then(function(result){
+        axios.get(window.href+'tasklist').then(function(result){
             //console.log(result.data);
             rows = result.data.data;
 			console.log("length==",rows.length);

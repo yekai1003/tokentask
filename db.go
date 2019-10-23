@@ -21,7 +21,7 @@ type TaskInfo struct {
 }
 
 func init() {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/tokentask?charset=utf8")
+	db, err := sql.Open("mysql", "root:root@tcp(10.211.55.7:3306)/tokentask?charset=utf8")
 	if err != nil {
 		log.Panic("failed to open mysql ", err)
 	}

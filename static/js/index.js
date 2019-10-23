@@ -4,8 +4,8 @@ $(function(){
   $('#entry_btn').on('click',function(){
 	var username=$("#user").val();
     var password=$("#password").val();
-    //console.log(username, password)
-    axios.post('http://localhost:8080/login',{
+    console.log(window.location)
+    axios.post(window.location.href+"login",{
     		user: username,
 		pass: password
     }).then((response)=>{
@@ -13,7 +13,7 @@ $(function(){
     		respmsg = response.data
 		if (respmsg.code == "0") {
 			console.log("login sucess")
-			window.open("http://localhost:8080/tasklist.html", "_self")
+			window.open(window.location.href+"tasklist.html", "_self")
 		} else {
 			console.log("login failed")
 		}
