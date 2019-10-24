@@ -3,7 +3,8 @@ $(function() {
   
     //任务列表
     function getTaskList(){
-        axios.get(window.location.href+'tasklist').then(function(result){
+    		console.log(window.location)
+        axios.get(window.location.origin+"/"+'tasklist').then(function(result){
             //console.log(result.data);
             rows = result.data.data;
 			console.log("length==",rows.length);
@@ -25,7 +26,7 @@ $(function() {
             $("#list").html(tr);
             
         })
-        .catch(error => console.error(error));    
+        .catch(error => console.log(error));    
     }
     
 });

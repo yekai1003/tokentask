@@ -13,7 +13,7 @@ $(function(){
     		respmsg = response.data
 		if (respmsg.code == "0") {
 			console.log("login sucess")
-			window.open(window.location.href+"tasklist.html", "_self")
+			window.open(window.location.origin+"/"+"tasklist.html", "_self")
 		} else {
 			console.log("login failed")
 		}
