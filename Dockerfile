@@ -1,4 +1,4 @@
-FROM golang:alpine
+FROM golang:latest
 
 MAINTAINER yekai "yekai_23@sohu.com"
 

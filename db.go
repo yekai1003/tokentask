@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -21,7 +22,11 @@ type TaskInfo struct {
 }
 
 func init() {
-	db, err := sql.Open("mysql", "root:root@tcp(10.211.55.7:3306)/tokentask?charset=utf8")
+	mysql_server := os.Getenv("MYSQL_SERVER")
+	if mysql_server == "" {
+		mysql_server = "0.0.0.0:3306"
+	}
+	db, err := sql.Open("mysql", "root:root@tcp("+mysql_server+")/tokentask?charset=utf8")
 	if err != nil {
 		log.Panic("failed to open mysql ", err)
 	}
