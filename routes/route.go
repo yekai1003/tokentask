@@ -99,10 +99,10 @@ func Issue(c *gin.Context) {
 	}
 	token_begin++
 	task.Task_id = token_begin
-	session := sessions.Default(c)
-	username := session.Get("username")
-	task.Issuer = username.(string)
-
+	//session := sessions.Default(c)
+	//username := session.Get("username")
+	task.Issuer = "yekai" //username.(string)
+	fmt.Println(task)
 	err = task.Add()
 	if err != nil {
 		resp.Code = utils.RECODE_DBERR
