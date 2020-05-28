@@ -105,7 +105,7 @@ func (t TaskInfo) Add() error {
 }
 
 func TaskModify(taskID, status uint, remark string) error {
-	_, err := dbconn.Exec("update t_tasks set status = ?, task_name=task_name+? where task_id = ?",
+	_, err := dbconn.Exec("update t_tasks set status = ?, task_name=? where task_id = ?",
 		status, remark, taskID)
 	if err != nil {
 		fmt.Println("Failed to modify task:", err)
