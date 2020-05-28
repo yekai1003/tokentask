@@ -3,6 +3,7 @@ package routes
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/yekai1003/tokentask/dbs"
 
@@ -15,7 +16,7 @@ import (
 )
 
 type RespMsg struct {
-	Code string      `json:"errno"`
+	Code string      `json:"code"`
 	Msg  string      `json:"msg"`
 	Data interface{} `json:"data"`
 }
@@ -75,6 +76,8 @@ func Register(c *gin.Context) {
 	return
 }
 
+var token_begin uint = 2000
+
 func Issue(c *gin.Context) {
 	resp := &RespMsg{
 		"0",
@@ -84,6 +87,8 @@ func Issue(c *gin.Context) {
 	defer ResponseData(c, resp)
 	task := dbs.TaskInfo{}
 	c.Bind(&task)
+	token_begin++
+	task.Task_id = token_begin
 	session := sessions.Default(c)
 	username := session.Get("username")
 	task.Issuer = username.(string)
@@ -125,7 +130,24 @@ func TaskList(c *gin.Context) {
 		nil,
 	}
 	defer ResponseData(c, resp)
+	pagestr := c.Query("page")
+	page, _ := strconv.Atoi(pagestr)
 	tasks := dbs.Task_query()
-	resp.Data = tasks
+	//begin, end := 0, 10
+	begin := (page - 1) * 10
+	end := page * 10
+	if end > len(tasks) {
+		end = len(tasks)
+	}
+	fmt.Println("begin = ", begin, ", end = %d", end, ",page = ", page)
+	fmt.Println(tasks)
+	ts := struct {
+		Total int         `json:"total"`
+		Data  interface{} `json:"data"`
+	}{
+		Total: len(tasks),
+		Data:  tasks[begin:end],
+	}
+	resp.Data = ts
 	return
 }
