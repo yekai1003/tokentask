@@ -104,7 +104,7 @@ func (t TaskInfo) Add() error {
 	return nil
 }
 
-func TaskModify(taskID, status uint, remark string) error {
+func TaskModify(taskID, status int, remark string) error {
 	_, err := dbconn.Exec("update t_tasks set status = ?, task_name=? where task_id = ?",
 		status, remark, taskID)
 	if err != nil {

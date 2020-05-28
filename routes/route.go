@@ -76,7 +76,7 @@ func Register(c *gin.Context) {
 	return
 }
 
-var token_begin uint = 2000
+var token_begin int = 2000
 
 func Issue(c *gin.Context) {
 	resp := &RespMsg{
