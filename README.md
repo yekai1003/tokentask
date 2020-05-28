@@ -19,3 +19,7 @@ curl  -H "Content-type: application/json" -X POST -d '{"task_id":1,"task_status"
 
 
 curl  -H "Content-type: application/json" -X POST -d '{"task_id":3,"task_status":1, "comment":"干的漂亮"}' "http://118.89.103.58:8080/update"
+
+curl -c cookie -H "Content-type: application/json" -X POST -d '{"username":"yekai","password":"123"}' "http://118.89.103.58:8080/login"
+
+curl -c cookie -H "Content-type: application/json" -X POST -d '{"username":"yekai","password":"123"}' "http://118.89.103.58:8080/register"

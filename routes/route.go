@@ -59,7 +59,12 @@ func Register(c *gin.Context) {
 	}
 	defer ResponseData(c, resp)
 	user := dbs.User{}
-	c.Bind(&user)
+	err := c.Bind(&user)
+	if err != nil {
+		fmt.Println("Failed to bind params")
+		resp.Code = utils.RECODE_PARAMERR
+		return
+	}
 	fmt.Println(user)
 	address, err := bcos.NewAccount(user.Password)
 	if err != nil {
@@ -86,14 +91,19 @@ func Issue(c *gin.Context) {
 	}
 	defer ResponseData(c, resp)
 	task := dbs.TaskInfo{}
-	c.Bind(&task)
+	err := c.Bind(&task)
+	if err != nil {
+		fmt.Println("Failed to bind params")
+		resp.Code = utils.RECODE_PARAMERR
+		return
+	}
 	token_begin++
 	task.Task_id = token_begin
 	session := sessions.Default(c)
 	username := session.Get("username")
 	task.Issuer = username.(string)
 
-	err := task.Add()
+	err = task.Add()
 	if err != nil {
 		resp.Code = utils.RECODE_DBERR
 		return
@@ -116,9 +126,14 @@ func Modify(c *gin.Context) {
 	taskmap := make(map[string]interface{})
 
 	task := dbs.TaskInfo{}
-	c.Bind(&taskmap)
+	err := c.Bind(&taskmap)
+	if err != nil {
+		fmt.Println("Failed to bind params")
+		resp.Code = utils.RECODE_PARAMERR
+		return
+	}
 	fmt.Println(taskmap)
-	err := dbs.TaskModify(task.Task_id, task.Status, task.Comment)
+	err = dbs.TaskModify(task.Task_id, task.Status, task.Comment)
 	if err != nil {
 		fmt.Println("Modify err:", err)
 		resp.Code = utils.RECODE_DBERR
