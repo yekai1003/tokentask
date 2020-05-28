@@ -12,11 +12,11 @@ import (
 var dbconn *sql.DB
 
 type TaskInfo struct {
-	Task_id   uint   `json:"task_id"`
+	Task_id   int    `json:"task_id"`
 	Issuer    string `json:"issuer"`
 	Task_user string `json:"task_user"`
-	Bonus     uint   `json:"bonus"`
-	Status    uint   `json:"task_status"`
+	Bonus     int    `json:"bonus"`
+	Status    int    `json:"task_status"`
 	TaskName  string `json:"task_name"`
 	Comment   string `json:"comment"`
 }

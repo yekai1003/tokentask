@@ -116,7 +116,7 @@ func Modify(c *gin.Context) {
 	taskmap := make(map[string]interface{})
 
 	task := dbs.TaskInfo{}
-	c.Bind(taskmap)
+	c.Bind(&taskmap)
 	fmt.Println(taskmap)
 	err := dbs.TaskModify(task.Task_id, task.Status, task.Comment)
 	if err != nil {
