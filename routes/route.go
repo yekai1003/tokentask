@@ -2,6 +2,7 @@ package routes
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 
@@ -110,7 +111,10 @@ func Modify(c *gin.Context) {
 		nil,
 	}
 	defer ResponseData(c, resp)
-	//
+
+	data, _ := ioutil.ReadAll(c.Request.Body)
+	fmt.Printf("ctx.Request.body: %v", string(data))
+
 	task := dbs.TaskInfo{}
 	c.Bind(&task)
 	fmt.Println(task)
