@@ -123,16 +123,16 @@ func Modify(c *gin.Context) {
 
 	// data, _ := ioutil.ReadAll(c.Request.Body)
 	// fmt.Printf("ctx.Request.body: %v", string(data))
-	taskmap := make(map[string]interface{})
+	//taskmap := make(map[string]interface{})
 
 	task := dbs.TaskInfo{}
-	err := c.Bind(&taskmap)
+	err := c.Bind(&task)
 	if err != nil {
 		fmt.Println("Failed to bind params")
 		resp.Code = utils.RECODE_PARAMERR
 		return
 	}
-	fmt.Println(taskmap)
+	fmt.Println(task)
 	err = dbs.TaskModify(task.Task_id, task.Status, task.Comment)
 	if err != nil {
 		fmt.Println("Modify err:", err)
